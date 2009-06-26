@@ -1,0 +1,218 @@
+#LyX 1.6.1 created this file. For more info see http://www.lyx.org/
+\lyxformat 345
+\begin_document
+\begin_header
+\textclass article
+\begin_preamble
+\lineskip=18pt
+\end_preamble
+\options reqno
+\use_default_options false
+\begin_modules
+theorems-ams
+theorems-ams-extended
+\end_modules
+\language english
+\inputencoding auto
+\font_roman default
+\font_sans default
+\font_typewriter default
+\font_default_family default
+\font_sc false
+\font_osf false
+\font_sf_scale 100
+\font_tt_scale 100
+
+\graphics default
+\paperfontsize 12
+\spacing double
+\use_hyperref true
+\pdf_bookmarks true
+\pdf_bookmarksnumbered false
+\pdf_bookmarksopen false
+\pdf_bookmarksopenlevel 1
+\pdf_breaklinks false
+\pdf_pdfborder true
+\pdf_colorlinks false
+\pdf_backref false
+\pdf_pdfusetitle true
+\papersize letterpaper
+\use_geometry true
+\use_amsmath 1
+\use_esint 1
+\cite_engine natbib_authoryear
+\use_bibtopic false
+\paperorientation portrait
+\leftmargin 0.9in
+\topmargin 0.9in
+\rightmargin 0.9in
+\bottommargin 0.9in
+\secnumdepth 3
+\tocdepth 3
+\paragraph_separation indent
+\defskip medskip
+\quotes_language english
+\papercolumns 1
+\papersides 1
+\paperpagestyle default
+\tracking_changes false
+\output_changes false
+\author "" 
+\author "" 
+\end_header
+
+\begin_body
+
+\begin_layout Title
+OpenIRT: Estimation and Inference for Item Response Models
+\begin_inset Foot
+status collapsed
+
+\begin_layout Plain Layout
+This work was supported by the World Bank.
+ Thanks go to Jishnu Das for finding support for this project and Dan Pemstein
+ for invaluable advice on his Scythe Statistical Library that was used to
+ implement the estimation procedures.
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Author
+Tristan Zajonc
+\begin_inset Foot
+status collapsed
+
+\begin_layout Plain Layout
+John F.
+ Kennedy School of Government, Harvard University.
+ E-Mail: tristan_zajonc@hksphd.harvard.edu, Web: http://ksghome.harvard.edu/~zajonct.
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Abstract
+\paragraph_spacing onehalf
+The OpenIRT package provides a simple interface to estimate the two-parameter,
+ three-parameter, and generalized partial credit item response models.
+ Bayesian models are estimated using Metropolis-Hastings or slice sampler.
+ OpenIRT can incorporate multiple groups, covariates, missing responses,
+ multiple test forms and fixed and free item parameters or ability estimates.
+ These options cover the predominant cases that in the research literature.
+ In simulations, OpenIRT outperforms the BILOG-MG in terms of mean squared
+ error.
+\end_layout
+
+\begin_layout Abstract
+\begin_inset Newpage newpage
+\end_inset
+
+
+\end_layout
+
+\begin_layout Section
+Models
+\end_layout
+
+\begin_layout Standard
+The 
+\emph on
+two-parameter logistic model
+\emph default
+ (2PL) is
+\begin_inset Formula \begin{equation}
+\Pr\left(X_{j}=1\mid\theta_{i},a_{j},b_{j}\right)=\frac{1}{1+\exp\left(-1.7\cdot a_{j}\cdot\left(\theta_{i}-b_{j}\right)\right)}.\label{eq:2PL}\end{equation}
+
+\end_inset
+
+The 
+\emph on
+three-parameter logistic model
+\emph default
+ (3PL) is
+\begin_inset Formula \begin{equation}
+\Pr\left(X_{j}=1\mid\theta_{i},a_{j},b_{j},c_{j}\right)=c_{j}+\frac{1-c_{j}}{1+\exp\left(-1.7\cdot a_{j}\cdot\left(\theta_{i}-b_{j}\right)\right)}.\label{eq:3PL}\end{equation}
+
+\end_inset
+
+The 
+\emph on
+generalized partial credit model
+\emph default
+ (GPC) is
+\begin_inset Formula \begin{equation}
+\Pr\left(X_{j}=k\mid\theta_{i},a_{j},b_{j},\mathbf{d}_{j}\right)=\frac{\sum_{l=1}^{k}\exp\left(-1.7\cdot a_{j}\cdot\left(\theta_{i}-b_{j}+d_{jl}\right)\right)}{\sum_{m=1}^{K_{j}}\sum_{l=1}^{m}\exp\left(-1.7\cdot a_{j}\cdot\left(\theta_{i}-b_{j}+d_{jl}\right)\right)}.\label{eq:GPC}\end{equation}
+
+\end_inset
+
+where 
+\begin_inset Formula $d_{j1}=0$
+\end_inset
+
+ and 
+\begin_inset Formula $\sum_{l=1}^{K_{j}}d_{jl}=0$
+\end_inset
+
+ by convention to eliminate the indeterminancy between 
+\begin_inset Formula $b_{j}$
+\end_inset
+
+ and 
+\begin_inset Formula $\mathbf{d}_{j}$
+\end_inset
+
+.
+ Figure 1.
+ three items from the NAEP item.
+\end_layout
+
+\begin_layout Standard
+\begin_inset Float figure
+wide false
+sideways false
+status collapsed
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset Caption
+
+\begin_layout Plain Layout
+Two-parameter logistic (2PL), three-parameter logistic (2PL), and generalized
+ partial credit (GPC) models
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\align center
+\begin_inset Graphics
+	filename /Users/tristanz/Data/Bayesian Nonparametrics/slice-test.ps
+	scale 60
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_body
+\end_document

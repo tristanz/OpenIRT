@@ -1,0 +1,6 @@
+v 1.0
+d Stata programs by Tristan Zajonc
+
+d Here are some potentially useful things I have written:
+
+p openirt Bayesian and Maximum Likelihood Estimation of Item Response Theory (IRT) models.
