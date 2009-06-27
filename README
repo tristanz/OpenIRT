@@ -26,4 +26,4 @@ INSTALLATION:
 
 In Stata:
 . net install http://example.com/openirt
-
+. help openirt

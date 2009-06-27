@@ -1,0 +1,20 @@
+OpenIRT Todo List:
+
+- Write real documentation beyond help file.
+- Fix progress bars.
+- Compile on linux.
+- Check Vista and 64 bit.
+- Figure out what's wrong with help format.
+- Add save chains option.
+- Improve syntax.
+- Add prior options.
+- Add [if] [in] support.
+- Windows compile script.
+
+Longer term issues:
+- Add GPC model.
+- Add EAP credible intervals (avoid because of memory issues for now).
+- Add hierarchical priors.
+- Add multiple groups.
+- Check multimodality issues for MLE.
+- Add manifest predictors (save varlist for these).

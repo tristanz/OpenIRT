@@ -23,8 +23,10 @@ kdensity percent_correct, xtitle("Percent Correct") title(NAEP Percent Correct S
 corr percent_correct item*
 
 * Estimate both item parameters and ability
-openirt, id(id) item_prefix(item) save_item_parameters(items) save_trait_parameters(traits) ///
-	samplesize(100) burnin(0) thin(1) model("2PL") fixed_item_file(naep_items.dta)
+openirt, id(id) item_prefix(item) save_item_parameters("items.dta") save_trait_parameters("traits.dta")
+
+*openirt, id(id) item_prefix(item) save_item_parameters(items) save_trait_parameters(traits) ///
+*	samplesize(100) burnin(0) thin(1) model("2PL") fixed_item_file(naep_items.dta)
 
 * Merge in ability estimates
 merge id using traits, sort

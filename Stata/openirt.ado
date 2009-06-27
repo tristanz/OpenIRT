@@ -6,7 +6,7 @@ program  openirt
 	set more off
 	set eolchar unix
 	local seed = runiform()*10000000
-	syntax, id(varname) item_prefix(name) save_item_parameters(name) save_trait_parameters(name) ///
+	syntax, id(varname) item_prefix(name) save_item_parameters(string) save_trait_parameters(string) ///
 		[samplesize(integer 2000) burnin(integer 1000) theta(varname) model(string) ///
 		fixed_item_file(string)]
 
