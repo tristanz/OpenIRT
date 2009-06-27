@@ -9,7 +9,6 @@ OpenIRT Todo List:
 - Improve syntax.
 - Add prior options.
 - Add [if] [in] support.
-- Windows compile script.
 
 Longer term issues:
 - Add GPC model.
@@ -18,3 +17,5 @@ Longer term issues:
 - Add multiple groups.
 - Check multimodality issues for MLE.
 - Add manifest predictors (save varlist for these).
+- Better compile process.
+- Compare with BilogMG.
