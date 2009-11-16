@@ -3,6 +3,8 @@ syntax: glob
 experiments
 old
 examples
+windows/Release
+windows/Debug
 .DS_Store
 X.txt
 out.txt
