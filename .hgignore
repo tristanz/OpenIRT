@@ -1,0 +1,13 @@
+syntax: glob
+
+experiments
+old
+examples
+.DS_Store
+X.txt
+out.txt
+.Rhistory
+*.prof
+build
+*.o
+*.lyx~
