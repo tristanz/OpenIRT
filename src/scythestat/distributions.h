@@ -89,6 +89,8 @@
 #include <algorithm>
 #include <limits>
 
+#include <boost/math/special_functions/log1p.hpp>
+
 #ifdef HAVE_IEEEFP_H
 #include <ieeefp.h>
 #endif
@@ -439,7 +441,7 @@ namespace scythe {
     if(log_p) {              \
         *cum = (-xsq * xsq * 0.5) + (-del * 0.5) + std::log(temp);  \
         if((lower && x > 0.) || (upper && x <= 0.))      \
-        *ccum = ::log1p(-std::exp(-xsq * xsq * 0.5) *     \
+        *ccum = boost::math::log1p(-std::exp(-xsq * xsq * 0.5) *     \
           std::exp(-del * 0.5) * temp);    \
     }                \
     else {                \

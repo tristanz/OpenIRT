@@ -80,7 +80,7 @@ int main(int argc, char* argv[]) {
 			sampler.AddStep(new SliceStep<AbilityParameter>(theta, 1, -dInf, dInf));
 		}
 	}
-
+	
 	// Run sampler
 	sampler.Run();
 	
