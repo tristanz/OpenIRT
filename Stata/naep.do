@@ -1,6 +1,6 @@
 * Example with simulated NAEP data.
 cap program drop openirt
-net install /Users/tristanz/Data/OpenIRT/Stata/openirt, force
+net install http://people.fas.harvard.edu/~tzajonc/stata/openirt/openirt, force
 
 clear
 set mem 50m
