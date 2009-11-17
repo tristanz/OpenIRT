@@ -16,8 +16,8 @@ and abilities parameters.
 f openirt.ado
 f openirt.sthlp
 G WIN OpenIRT.exe openirt.exe
-G MAC openirt_osx openirt
-G LINUX openirt_linux openirt
+G MAC openirt_osx openirt.exe
+G LINUX openirt_linux openirt.exe
 F openirt.ini
 F naep_children.dta
 F naep_items.dta
