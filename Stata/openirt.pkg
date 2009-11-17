@@ -15,7 +15,7 @@ and abilities parameters.
 
 f openirt.ado
 f openirt.sthlp
-F openirt.exe
+F OpenIRT.exe
 F openirt_osx
 F openirt_linux
 F openirt.ini
