@@ -17,6 +17,8 @@ f openirt.ado
 f openirt.sthlp
 g WIN OpenIRT.exe openirt.exe
 g MAC openirt_osx openirt.exe
+g MACINTEL openirt_osx openirt.exe
+g MACINTEL64 openirt_osx openirt.exe
 g LINUX openirt_linux openirt.exe
 F openirt.ini
 F naep_children.dta
