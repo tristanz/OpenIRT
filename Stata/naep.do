@@ -1,6 +1,6 @@
 * Example with simulated NAEP data.
 cap program drop openirt
-net install http://people.fas.harvard.edu/~tzajonc/stata/openirt/openirt, force
+net install http://www.people.fas.harvard.edu/~tzajonc/stata/openirt/openirt, force
 
 clear
 set mem 50m
@@ -24,9 +24,6 @@ corr percent_correct item*
 
 * Estimate both item parameters and ability
 openirt, id(id) item_prefix(item) save_item_parameters("items.dta") save_trait_parameters("traits.dta")
-
-*openirt, id(id) item_prefix(item) save_item_parameters(items) save_trait_parameters(traits) ///
-*	samplesize(100) burnin(0) thin(1) model("2PL") fixed_item_file(naep_items.dta)
 
 * Merge in ability estimates
 merge id using traits, sort

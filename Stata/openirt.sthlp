@@ -18,8 +18,8 @@
 {synopthdr}
 {synoptline}
 {syntab:Required options}
-{synopt :{opt id(varname)}}unique respondent ID{p_end}
-{synopt :{opt item_prefix(name)}}prefix of item variables{p_end}
+{synopt :{opt id(varname)}}unique integer respondent ID{p_end}
+{synopt :{opt item_prefix("prefix")}}prefix of item variables, e.g. "item"{p_end}
 {synopt :{opt save_item_parameters("filename")}}filename to save item parameter estimates{p_end}
 {synopt :{opt save_trait_parameters("filename")}}filename to save trait/ability parameter estimates{p_end}
 
@@ -62,7 +62,7 @@
 {opt theta(varname)} specifies variable name holding fixed trait or ability parameters.  Any missing entries will be treated as free parameters.
 
 {phang}
-{opt fixed_item_file("filename")} specifies filename holding fixed item types and parameters.  The  file must include at least four variables: {it:id}, {it:type}, {it:a}, {it:b}, {it:c}.  {it:id} gives the unique item identifier that matches the {opt item_prefix(name)} id.  {it:type} should equal 1 for 2PL items and 2 for 3PL items. {it:a} is the item discrimination parameter, {it:b} is the item difficulty parameter, and {it:c} is the  item guessing parameter. Note: {cmd: openirt} assumes all items use the normal ogive metric ({it:D = 1.7}).
+{opt fixed_item_file("filename")} specifies filename holding fixed item types and parameters.  The  file must include at least four variables: {it:id}, {it:type}, {it:a}, {it:b}, {it:c}.  {it:id} gives the unique numeric item identifier that matches the {opt item_prefix("prefix")} postfix.  {it:type} should equal 1 for 2PL items and 2 for 3PL items. {it:a} is the item discrimination parameter, {it:b} is the item difficulty parameter, and {it:c} is the  item guessing parameter. Note: {cmd: openirt} assumes all items use the normal ogive metric ({it:D = 1.7}).
 
 {dlgtab:MCMC Options}
 
@@ -70,24 +70,26 @@
 {opt samplesize(2000)} specifies the number of post burn in MCMC iterations (default = 2000). Plausible values are drawn at evenly spaced intervals from this sample, and EAP estimates are based on the mean of the entire sample. Larger sample sizes will reduce the monte carlo standard error.  In most applications the standard error of measurement dominates the monte carlo standard error after several thousand iterations.
 
 {phang}
-{opt burnin(1000)} specifies the number of burn in MCMC iterations (default = 1000).  MCMC estimates rely on the chain converging to a stationary state.  In most IRT applications this occurs quite quickly -- within several hundred iterations.  If estimates do not appear to be converging, increase the burn in period.
+{opt burnin(1000)} specifies the number of burn in MCMC iterations (default = 1000).  MCMC estimates rely on the chain converging to a stationary distribution.  In most IRT applications this occurs quite quickly -- within several hundred iterations.  If estimates do not appear to be converging, increase the burn in period.
 
 {title:Discussion}
 
 {pstd}OpenIRT estimates 2PL and 3PL Item Response Theory (IRT) models for dichotomous (correct / incorrect) data using both Bayesian and Maximum Likelihood methods.{p_end}
 
-{pstd}The software allows for missing (free) and fixed item parameters, abilities, and responses. This allows, for instance, equating of multiple overlapping test forms; equating test forms using a known reference population; and placing students on known ability metric using fixed item parameters from an item data bank such as TIMSS or NAEP (see, e.g, Das and Zajonc(2009)).{p_end}
+{pstd}The software allows for missing (free) and fixed item parameters, abilities, and responses. This allows, for instance, equating of multiple overlapping test forms; equating test forms using a known reference population; and placing students on known ability metric using fixed item parameters from an item data bank such as TIMSS or NAEP (see, e.g., Das and Zajonc(2009)).{p_end}
 
 {pstd}Unlike some other IRT software, OpenIRT includes both Bayesian MCMC and Maximum Likelihood estimates.  The software estimates expected posterior (EAP), plausible value (PV), and maximum likelihood (MLE) estimates of the underlying latent trait -- often called theta or ability.{p_end}
 
 {pstd}Plausible values, or multiple imputations, are draws from the posterior of each respondent's ability parameter.  While potentially poor measures of each respondent's ability, plausible values allow accurate estimation of distributional quantities, such as the upper and lower quartiles, or fraction of students passing a particular threshold.  If the number of items is small, EAP and MLE estimates will generally yield very poor estimates of such quantities, with EAP understanding the standard deviation and MLE estimates overestimating the standard deviation.  See Das and Zajonc (2009) and Mislevy et al (1992).{p_end}
 
-{pstd}{it:Note on speed}: Estimation can be slow due to the large number of free  parameters estimated using MCMC simulation.  Users with large data sets may wish to use small subsamples of data before running an analysis on the full sample.{p_end}
+{pstd}The exact priors used can be seen and changed by examining openirt.ini in the usersite directory.  The priors where calibrated using the NAEP item bank and should perform well under a broad range of scenarios.
+
+{pstd}{it:Note on speed}: Estimation can be slow due to the large number of free  parameters estimated using MCMC simulation.  Users with large data sets may wish to use small subsamples of data before running an analysis on the full sample.  On many systems a built in progress bar does not currently display in Stata.{p_end}
 
 {title:Examples:  Scoring single form.}
 
 {phang2}{cmd:. sysuse naep_children, clear}{p_end}
-{phang2}{cmd:. openirt, id(id) save_item_parameters("items.dta") save_trait_parameters("traits.dta")}{p_end}
+{phang2}{cmd:. openirt, id(id) save_item_parameters("items.dta") save_trait_parameters("traits.dta")} item_prefix("item")}{p_end}
 
 {title:Examples:  Scoring multiple overlapping forms.}
 
@@ -97,9 +99,9 @@
 {phang2}{cmd:. recode item3 item4 (0/1 = .) if _n > 250}{p_end}
 
 {phang}Score overlapping exams:{p_end}
-{phang2}{cmd:. openirt, id(id) save_item_parameters("items.dta") save_trait_parameters("traits.dta")}{p_end}
+{phang2}{cmd:. openirt, id(id) save_item_parameters("items.dta") save_trait_parameters("traits.dta") item_prefix("item")}{p_end}
 
-{title:Examples:  Linking to fixed item parameters.}
+{title:Examples:  Linking to fixed item parameters, such as TIMSS or NAEP.}
 
 {phang}Create 10 fixed items:{p_end}
 {phang2}{cmd:. sysuse naep_items, clear}{p_end}
@@ -108,7 +110,7 @@
 
 {phang}Score exam using mixed fixed and free items:{p_end}
 {phang2}{cmd:. sysuse naep_children, clear}{p_end}
-{phang2}{cmd:. openirt, id(id) save_item_parameters("items.dta") save_trait_parameters("traits.dta") fixed_item_file("fixed_items.dta")}{p_end}
+{phang2}{cmd:. openirt, id(id) save_item_parameters("items.dta") save_trait_parameters("traits.dta") fixed_item_file("fixed_items.dta") item_prefix("item")}{p_end}
 
 
 {title:References}
@@ -131,8 +133,8 @@ Van der Linden, W.J. and Hambleton, R.K. (1997) {it:Handbook of modern item resp
 {pstd}Tristan Zajonc{p_end}
 {pstd}John F. Kennedy School of Government{p_end}
 {pstd}Harvard University, Cambridge, MA 02138.{p_end}
-{pstd}Email: tristanz@gmail.com{p_end}
-{pstd}Web: http://ksghome.harvard.edu/~zajonct/{p_end}
+{pstd}Email: tzajonc@fas.harvard.edu{p_end}
+{pstd}Web: http://www.people.fas.harvard.edu/~tzajonc/{p_end}
 
 
 

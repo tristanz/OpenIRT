@@ -1,6 +1,6 @@
 v 1.0
 d openirt. Bayesian and Maximum Likelihood Estimation of Item Response Theory (IRT) models.
-d Tristan Zajonc (tristanz@gmail.com).
+d Tristan Zajonc (tzajonc@fas.harvard.edu).
 d
 d OpenIRT estimates 2PL and 3PL Item Response Theory (IRT) models for dichotomous data.
 d It includes Bayesian MCMC estimation of item parameters and abilities, and maximum
@@ -11,7 +11,9 @@ d OpenIRT is designed to be flexible. It allows any combination of items, abilit
 d and responses to be missing.  For instance, fixed anchor items can be used to place
 d children and items on a known scale; missing responses can be used to link multiple
 d overlapping test forms; and known abilities can be used to calibrate new items 
-d and abilities parameters.
+d and ability parameters.  
+d
+d OpenIRT relies on compiled code that works on Windows, Mac, and Linux.
 
 f openirt.ado
 f openirt.sthlp
