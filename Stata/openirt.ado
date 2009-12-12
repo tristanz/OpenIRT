@@ -49,7 +49,7 @@ program  openirt
 			display as error "Warning: `v' is 100 percent 1, consider dropping item."
 		}
 	}
-	
+	qui recode _all (.=-9999)
 	qui gen `group' = 1
 	qui outsheet id `group' `theta' `item_prefix'* using `response_file', replace delim(" ") noquote nolabel nonames
 	* type `response_file'

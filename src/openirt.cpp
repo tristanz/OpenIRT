@@ -42,7 +42,7 @@ int main(int argc, char* argv[]) {
 	cout << "Adding missing responses..." << endl;
 	for(int i = 0; i < responses.num_responses; ++i) {
 		for(int j = 0; j < items.num_items; ++j) {
-			if(responses.x(i, j)==MISSING) {
+			if(approx_equal(responses.x(i, j),MISSING)) {
 				if(items.type(j) == TYPE_2PL) {
 					Missing2PLParameter p(false, "missing", i, j);
 					sampler.AddStep(new GibbsStep<Missing2PLParameter, int>(p));

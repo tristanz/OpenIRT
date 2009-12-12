@@ -18,6 +18,8 @@ d OpenIRT relies on compiled code that works on Windows, Mac, and Linux.
 f openirt.ado
 f openirt.sthlp
 G WIN	OpenIRT.exe	openirt.exe
+G WIN64A	OpenIRT.exe	openirt.exe
+G WIN64I	OpenIRT.exe	openirt.exe
 G MAC	openirt_osx	openirt.exe
 G MACINTEL	openirt_osx	openirt.exe
 G MACINTEL64	openirt_osx	openirt.exe
@@ -25,4 +27,6 @@ G LINUX openirt_linux openirt.exe
 F openirt.ini
 F naep_children.dta
 F naep_items.dta
-F naep.do
+F timss_children.dta
+F timss_items.dta
+F openirt_examples.do
