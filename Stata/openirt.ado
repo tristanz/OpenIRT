@@ -5,7 +5,7 @@ program  openirt
 	preserve
 	set more off
 	set eolchar unix
-	local seed = runiform()*10000000
+	local seed = round(runiform()*10000000)
 	syntax, id(varname) item_prefix(name) save_item_parameters(string) save_trait_parameters(string) ///
 		[samplesize(integer 2000) burnin(integer 1000) theta(varname) model(string) ///
 		fixed_item_file(string)]
@@ -73,7 +73,7 @@ program  openirt
 		gen type = 2
 		display as text "Default model: Three parameter logistic (3PL)"
 	}
-  gen numcat = 2
+	gen numcat = 2
 	gen a = -9999
 	gen b = -9999
 	gen c = -9999
@@ -126,10 +126,10 @@ program  openirt
 	tempfile responseout
 	capture erase `reponseout'
 	capture erase `testout'
-	local a `execfile' --config-file=`inifile' --test-file='`item_file'' --response-file='`response_file'' ///
+	local a `execfile' --config-file=`inifile' --test-file=`item_file' --response-file=`response_file' ///
     --test-outfile=`testout' --response-outfile=`responseout' ///
     --sample-size=`samplesize' --burnin=`burnin' --thin=1 --random-seed=`seed'
-				*display "`a'"
+	display "`a'"
 	! `a'
 	
 	cap confirm file `responseout'
