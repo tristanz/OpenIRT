@@ -135,7 +135,7 @@ program  openirt
 	local a `execfile' --config-file=`inifile' --test-file=`item_file' --response-file=`response_file' ///
     --test-outfile=`testout' --response-outfile=`responseout' ///
     --sample-size=`samplesize' --burnin=`burnin' --thin=1 --random-seed=`seed'
-	display "`a'"
+	* display "`a'"
 	! `a'
 	
 	cap confirm file `responseout'
