@@ -53,7 +53,10 @@ program  openirt
 	qui gen `group' = 1
 	qui outsheet id `group' `theta' `item_prefix'* using `response_file', replace delim(" ") noquote nolabel nonames
 	* type `response_file'
-
+	if("`c(os)'"=="Windows") {
+		qui findfile DOS2UNIX.EXE
+		! `r(fn)' `response_file'
+	}
 	* Write out parameter data
 	display as text "Setting up parameter data..."
 	clear
@@ -109,7 +112,10 @@ program  openirt
 	sort id
 	isid id
 	qui outsheet id type numcat a b c d1 d2 d3 d4 using `item_file', replace delim(" ") noquote nolabel nonames
-
+	if("`c(os)'"=="Windows") {
+		qui findfile DOS2UNIX.EXE
+		! `r(fn)' `item_file'
+	}
 	* Run estimation routine from shell
 	qui findfile openirt.exe
 	local execfile `r(fn)'

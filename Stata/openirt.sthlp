@@ -145,6 +145,7 @@ For multiple tests forms, each row (unit) should include all possible items; ite
 
 {phang}Rescale to TIMSS scale (mu=500 sd=100), see TIMSS 1999.{p_end}
 {phang2}{cmd:. foreach x of varlist theta_eap theta_mle theta_pv1 theta_pv2 theta_pv3 theta_pv4 theta_pv5 {	replace `x' = `x'*100 + 500 } }{p_end}
+
 {title:References}
 
 {phang}

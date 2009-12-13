@@ -1225,7 +1225,7 @@ namespace scythe {
 						}
 			    } while (c != EOF);
 			    fclose (pFile);
-					
+					cout << 
           while (std::getline(file, row, delim)) {
             std::vector<T_type> column;
             std::istringstream rowstream(row);
