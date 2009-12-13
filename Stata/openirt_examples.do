@@ -168,20 +168,27 @@ twoway (scatter theta_mle theta) (function y=x, range(-3 3)), ///
 * Example 3: Link to TIMSS using test formed from TIMSS item bank.
 sysuse timss_items, clear
 save fixed_items, replace
-
 sysuse timss_children, clear
 openirt, id(id) save_item_parameters("items.dta") save_trait_parameters("traits.dta") ///
-	fixed_item_file("fixed_items.dta") item_prefix(item)
+	fixed_item_file("fixed_items.dta") item_prefix(q)
+* load results
+use traits, clear
+* place on TIMSS scale (mu=500 sd=100), see TIMSS 1999.
+foreach x of varlist theta_eap theta_mle theta_pv1 theta_pv2 theta_pv3 theta_pv4 theta_pv5 {
+	replace `x' = `x'*100 + 500
+}
 
-* Merge in ability estimates
-merge id using traits, sort
+kdensity(theta_pv1), bw(15) gen(x1 d1)
+kdensity(theta_pv2), bw(15) gen(x2 d2) at(x1)
+kdensity(theta_pv3), bw(15) gen(x3 d3) at(x1)
+kdensity(theta_pv4), bw(15) gen(x4 d4) at(x1)
+kdensity(theta_pv5), bw(15) gen(x5 d5) at(x1)
+egen d = rowmean(d*)
+line(d x1)
 
-* Graph TRUE vs EAP
-twoway (scatter theta_eap theta) (function y=x, range(-3 3)), ///
-	xtitle("Theta (True)") ytitle("Theta (EAP)") title("") ///
-  text(3 3 "y = x", place(e)) legend(off)
+twoway (kdensity theta_eap, bw(20)) ///
+	(line d x1) (kdensity theta_mle, bw(20)), ///
+	xtitle("Theta") title("EAP, PV, MLE Estimates") ///
+	legend(order(1 "EAP" 2 "PV" 3 "MLE"))
 
-* Graph TRUE vs MLE
-twoway (scatter theta_mle theta) (function y=x, range(-3 3)), ///
-	xtitle("Theta (True)") ytitle("Theta (MLE)") title("") ///
-  text(3 3 "y = x", place(e)) legend(off)
+drop x* d*
