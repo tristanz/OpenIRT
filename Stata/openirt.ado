@@ -53,8 +53,9 @@ program  openirt
 	qui recode _all (.=-9999)
 	qui gen `group' = 1
 	qui outsheet `id' `group' `theta' `item_prefix'* using openirt_tmp.txt, replace delim(" ") noquote nolabel nonames
+	capture erase `response_file'
 	filefilter openirt_tmp.txt `response_file', from("\r\n") to("\n")
-	erase openirt_tmp.txt
+	capture erase openirt_tmp.txt
 	
 	* Write out parameter data
 	display as text "Setting up parameter data..."
@@ -111,8 +112,9 @@ program  openirt
 	sort id
 	isid id
 	qui outsheet id type numcat a b c d1 d2 d3 d4 using openirt_tmp.txt, replace delim(" ") noquote nolabel nonames
+	capture erase `item_file'
 	filefilter openirt_tmp.txt `item_file', from("\r\n") to("\n")
-	erase openirt_tmp.txt
+	capture erase openirt_tmp.txt
 	
 	* Run estimation routine from shell
 	qui findfile openirt.exe
