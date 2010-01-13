@@ -342,7 +342,14 @@ I focus on common goals of development economists
 \end_inset
 
 , motivated by the difficulties we faced for LEAPS Project (Andrabi et al.,
- 2009) and India benchmarking exercises (Das and Zajonc, 2009).
+ 2009) and India benchmarking exercises 
+\begin_inset CommandInset citation
+LatexCommand citep
+key "das.wp2008"
+
+\end_inset
+
+.
 \end_layout
 
 \begin_layout Standard
@@ -1247,11 +1254,25 @@ Bayesian estimation is done via Markov Chain Monte Carlo (MCMC) methods.
 \end_layout
 
 \begin_layout Itemize
-See Patz and Junker (1999a,b) for details on MCMC methods applied to IRT.
+See 
+\begin_inset CommandInset citation
+LatexCommand citet
+key "patz.jebs1999a,patz.jebs1999b"
+
+\end_inset
+
+ for details on MCMC methods applied to IRT.
 \end_layout
 
 \begin_layout Itemize
-OpenIRT uses slice sampling (Neal, 2003) rather than Metropolis-Hastings.
+OpenIRT uses slice sampling 
+\begin_inset CommandInset citation
+LatexCommand citep
+key "neal.aos2003"
+
+\end_inset
+
+ rather than Metropolis-Hastings.
 \end_layout
 
 \begin_layout BeginFrame

@@ -1,4 +1,4 @@
-v 1.0
+v 1.1
 d openirt. Bayesian and Maximum Likelihood Estimation of Item Response Theory (IRT) models.
 d Tristan Zajonc (tzajonc@fas.harvard.edu).
 d
@@ -20,9 +20,6 @@ f openirt.sthlp
 G WIN	OpenIRT.exe	openirt.exe
 G WIN64A	OpenIRT.exe	openirt.exe
 G WIN64I	OpenIRT.exe	openirt.exe
-G WIN	DOS2UNIX.EXE	DOS2UNIX.EXE
-G WIN64A	DOS2UNIX.EXE	DOS2UNIX.EXE
-G WIN64I	DOS2UNIX.EXE	DOS2UNIX.EXE
 G MAC	openirt_osx	openirt.exe
 G MACINTEL	openirt_osx	openirt.exe
 G MACINTEL64	openirt_osx	openirt.exe

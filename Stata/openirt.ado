@@ -2,10 +2,11 @@
 *
 capture program drop openirt
 program  openirt
+  version 10.1
 	preserve
 	set more off
-	set eolchar unix
-	local seed = round(runiform()*10000000)
+	* set eolchar unix
+	local seed = round(uniform()*10000000)
 	syntax, id(varname) item_prefix(name) save_item_parameters(string) save_trait_parameters(string) ///
 		[samplesize(integer 2000) burnin(integer 1000) theta(varname) model(string) ///
 		fixed_item_file(string)]
@@ -51,12 +52,10 @@ program  openirt
 	}
 	qui recode _all (.=-9999)
 	qui gen `group' = 1
-	qui outsheet id `group' `theta' `item_prefix'* using `response_file', replace delim(" ") noquote nolabel nonames
-	* type `response_file'
-	if("`c(os)'"=="Windows") {
-		qui findfile DOS2UNIX.EXE
-		! `r(fn)' `response_file'
-	}
+	qui outsheet `id' `group' `theta' `item_prefix'* using openirt_tmp.txt, replace delim(" ") noquote nolabel nonames
+	filefilter openirt_tmp.txt `response_file', from("\r\n") to("\n")
+	erase openirt_tmp.txt
+	
 	* Write out parameter data
 	display as text "Setting up parameter data..."
 	clear
@@ -111,11 +110,10 @@ program  openirt
 	qui compress
 	sort id
 	isid id
-	qui outsheet id type numcat a b c d1 d2 d3 d4 using `item_file', replace delim(" ") noquote nolabel nonames
-	if("`c(os)'"=="Windows") {
-		qui findfile DOS2UNIX.EXE
-		! `r(fn)' `item_file'
-	}
+	qui outsheet id type numcat a b c d1 d2 d3 d4 using openirt_tmp.txt, replace delim(" ") noquote nolabel nonames
+	filefilter openirt_tmp.txt `item_file', from("\r\n") to("\n")
+	erase openirt_tmp.txt
+	
 	* Run estimation routine from shell
 	qui findfile openirt.exe
 	local execfile `r(fn)'
