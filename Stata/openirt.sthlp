@@ -101,8 +101,8 @@ See Das and Zajonc (2009) and Mislevy et al (1992).{p_end}
 The priors were calibrated using the NAEP item bank and should perform well under a broad range of scenarios.{p_end}
 
 {pstd}{it:Note on speed}: Estimation can be slow due to the large number of free  parameters estimated using MCMC simulation.  
-Users with large data sets may wish to use small subsamples of data before running an analysis on the full sample.  
-On many systems a built in progress bar does not currently display in Stata.{p_end}
+Users with large data sets may wish to use small subsamples of data before running an analysis on the full sample.
+{p_end}
 
 {title:General instructions}
 

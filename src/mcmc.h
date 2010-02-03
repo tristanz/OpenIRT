@@ -1179,12 +1179,13 @@ public:
    */
 	 void Iterate(int number_of_iterations, bool progress = false) {
 	   if(progress) {
-	     boost::progress_display show_progress(number_of_iterations);
+	     //boost::progress_display show_progress(number_of_iterations);
 	     for(int iter = 0; iter < number_of_iterations; ++iter) {
-	       for(int i = 0; i < steps_.size(); ++i) {
+	       cout << "Iteration " << iter << endl;
+				 for(int i = 0; i < steps_.size(); ++i) {
 	         steps_[i].DoStep();
 	       }
-	       ++show_progress;
+	       //++show_progress;
 	     }
 	   }
 	   else {
