@@ -30,9 +30,8 @@
 #include "openirt.h"
 
 int main(int argc, char* argv[]) {
-	 // Timer
-   boost::timer timer;
- 
+	// Timer
+  boost::timer timer;
   // Process command line and load config file.
   StartUp(argc, argv);
 	InitResults();

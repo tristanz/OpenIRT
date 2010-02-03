@@ -24,6 +24,7 @@
 // OTHER DEALINGS IN THE SOFTWARE.
 
 #include "mcmc.h"
+#include <limits>
 
 /// Process command line and config file
 void StartUp(int argc, char* argv[]) {
@@ -99,7 +100,7 @@ void StartUp(int argc, char* argv[]) {
   responses.num_items = responses.x.cols();
   responses.num_groups = max(responses.group);
   cout << "Responses added: " << responses.num_responses << endl;
-
+  std::out << "Max int limit: " << std::numeric_limits<int>::max() << std::endl;
 }
 
 /// 2PL Item Response Functions
