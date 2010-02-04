@@ -1047,6 +1047,7 @@ public:
 	  // Find the log density at the initial point.
     double x0 = parameter_.Value();
     double gx0 = parameter_.LogDensity(x0);
+	 	//cout << parameter_.Label() << " : " << x0 << " = " << gx0 << endl;
 
     // Determine slice level, in log terms
     double logy = gx0 - myrng.rexp(1);
@@ -1183,6 +1184,7 @@ public:
 	     for(int iter = 0; iter < number_of_iterations; ++iter) {
 	       cout << "Iteration " << iter << endl;
 				 for(int i = 0; i < steps_.size(); ++i) {
+					 //cout << "Step " << i << endl;
 	         steps_[i].DoStep();
 	       }
 	       //++show_progress;

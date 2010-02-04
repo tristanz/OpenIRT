@@ -62,10 +62,12 @@ int main(int argc, char* argv[]) {
 				B2PLParameter b(true, "b"+to_string<int>(items.id(j)), j);
 				sampler.AddStep(new SliceStep<B2PLParameter>(b, 1, -dInf, dInf));
 			} else if (items.type(j) == TYPE_3PL) {
+				// cout << items.id(j) << endl;
+				// Temporarily put some limits on these.  Discrete priors.
 				A3PLParameter a(true, "a"+to_string<int>(items.id(j)), j);
-				sampler.AddStep(new SliceStep<A3PLParameter>(a, 1, 0, dInf));
+				sampler.AddStep(new SliceStep<A3PLParameter>(a, 1, 0, 10));
 				B3PLParameter b(true, "b"+to_string<int>(items.id(j)), j);
-				sampler.AddStep(new SliceStep<B3PLParameter>(b, 1, -dInf, dInf));
+				sampler.AddStep(new SliceStep<B3PLParameter>(b, 1, -10, 10));
 				C3PLParameter c(true, "c"+to_string<int>(items.id(j)), j);
 				sampler.AddStep(new SliceStep<C3PLParameter>(c, 1, 0, 1));
 			}

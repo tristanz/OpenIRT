@@ -101,6 +101,13 @@ void StartUp(int argc, char* argv[]) {
   responses.num_groups = max(responses.group);
   cout << "Responses added: " << responses.num_responses << endl;
   std::cout << "Max int limit: " << std::numeric_limits<int>::max() << std::endl;
+
+	//   cout << "Items ID:" << endl << items.id << endl;
+	//   cout << "Items Type:" << endl << items.type << endl;
+	//   cout << "Items a:" << endl << items.a << endl;
+	//   cout << "Items b:" << endl << items.b << endl;
+	// cout << "Items c:" << endl << items.c << endl;
+
 }
 
 /// 2PL Item Response Functions
