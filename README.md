@@ -21,6 +21,20 @@ In Stata:
 . help openirt
 ```
 
+### Building (Developers)
+
+This Stata library relies on compiled code.  To build on OSX:
+
+```
+brew install boost
+$ ./make.sh
+```
+
+On Windows:
+
+```
+```
+
 ### LICENSE
 
 MIT
