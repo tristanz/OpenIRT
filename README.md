@@ -1,4 +1,4 @@
-## OpenIRT v. 1.0 - Bayesian and Maximum Likelihood Estimation of IRT Models.
+## OpenIRT - Bayesian and Maximum Likelihood Estimation of IRT Models.
 
 OpenIRT estimates 2PL and 3PL Item Response Theory (IRT) models for
 dichotomous data. It includes Bayesian MCMC estimation of item parameters
@@ -12,7 +12,7 @@ items can be used to place children and items on a known scale; missing
 responses can be used to link multiple overlapping test forms; and known
 abilities can be used to calibrate new items and ability parameters.
 
-### Installation
+### Installation / Usage
 
 In Stata:
 
@@ -21,7 +21,7 @@ In Stata:
 . help openirt
 ```
 
-### Building (Developers)
+### Building / Development
 
 This Stata library relies on compiled code.  To build on OSX:
 
