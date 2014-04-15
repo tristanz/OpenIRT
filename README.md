@@ -1,7 +1,5 @@
 ## OpenIRT v. 1.0 - Bayesian and Maximum Likelihood Estimation of IRT Models.
 
-### Description
-
 OpenIRT estimates 2PL and 3PL Item Response Theory (IRT) models for
 dichotomous data. It includes Bayesian MCMC estimation of item parameters
 and abilities, and maximum likelihood ability estimates.  The Bayesian
@@ -21,7 +19,7 @@ In Stata:
 ```stata
 . net install http://people.fas.harvard.edu/~tzajonc/stata/openirt
 . help openirt
-``
+```
 
 ### LICENSE
 
