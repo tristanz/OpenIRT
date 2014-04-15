@@ -8,4 +8,4 @@ echo "Compiling OpenIRT..."
 #icpc -DSCYTHE_DEBUG=0 -O3 -fast -I /usr/local/include/boost-1_39/ openirt.cpp -o ../Stata/openirt.exe
 #[ $? -ne 0 ] && exit 1
 
-g++ -DSCYTHE_DEBUG=0 -O3 -funroll-loops openirt.cpp -o build/openirt
+mkdir build; g++ -DSCYTHE_DEBUG=0 -O3 -funroll-loops -I ./src src/openirt.cpp -o stata/openirt_osx
