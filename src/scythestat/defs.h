@@ -33,16 +33,16 @@
  *
  * The Scythe Statistical Library is an open source C++ library for
  * statistical computation, written by Daniel Pemstein (University of
- * Illinois), Kevin M. Quinn (Harvard University), and Andrew D.
- * Martin (Washington University). It includes a suite of matrix
- * manipulation functions, a suite of pseudo-random number generators,
- * and a suite of numerical optimization routines. Programs written
- * using Scythe are generally much faster than those written in
- * commonly used interpreted languages, such as R and MATLAB, and can
- * be compiled on any system with the GNU GCC compiler (and perhaps
- * with other C++ compilers). One of the primary design goals of the
- * Scythe developers has been ease of use for non-expert C++
- * programmers. We provide ease of use through three primary
+ * Mississippi), Kevin M. Quinn (University of California Berkeley),
+ * and Andrew D.  Martin (Washington University). It includes a suite
+ * of matrix manipulation functions, a suite of pseudo-random number
+ * generators, and a suite of numerical optimization routines.
+ * Programs written using Scythe are generally much faster than those
+ * written in commonly used interpreted languages, such as R and
+ * MATLAB, and can be compiled on any system with the GNU GCC compiler
+ * (and perhaps with other C++ compilers). One of the primary design
+ * goals of the Scythe developers has been ease of use for non-expert
+ * C++ programmers. We provide ease of use through three primary
  * mechanisms: (1) operator and function over-loading, (2) numerous
  * pre-fabricated utility functions, and (3) clear documentation and
  * example programs. Additionally, Scythe is quite flexible and
@@ -73,37 +73,56 @@
  *
  * \section compile Compilation
  *
- * Scythe should work with the GNU GCC compiler, version 4.0.1 and
+ * Scythe should work with the GNU GCC compiler, version 4.4.7 and
  * greater.  Scythe has not been tested with other compilers.  Scythe
  * provides a number of pre-processor flags.  The
- * SCYTHE_COMPILE_DIRECT allows the user to compile Scythe sources
- * directly.  The SCYTHE_VIEW_ASSIGNMENT_FLAG turns on R-style
+ * SCYTHE_COMPILE_DIRECT flag allows the user to compile Scythe sources
+ * directly.  The SCYTHE_VIEW_ASSIGNMENT_FLAG flag turns on R-style
  * recycling in Matrix::operator=() for view matrices. 
  *
- * The SCYTHE_DEBUG_LEVEL controls the amount of error trapping in
- * Scythe.  This level ranges from 0 (virtually no checking) to 3 (all
+ * The SCYTHE_DEBUG flag controls the amount of error trapping in Scythe.
+ * This level ranges from 0 (virtually no checking) to 3 (all
  * checking, including Matrix bounds checking, turned on).  By
- * default, the level is set to 3.  Here's an example of how to
+ * default, the level is set to 3.  Reducing the error check level can
+ * substantially improve performance.  Here's an example of how to
  * compile a program with only basic error checking:
  *
- * \verbatim $ g++ myprog.cc -DSCYTHE_DEBUG_LEVEL=1 \endverbatim
+ * \verbatim $ g++ myprog.cc -DSCYTHE_DEBUG=1 \endverbatim
  *
- * Finally, the SCYTHE_LAPACK flag enables LAPACK/BLAS.  You must have
+ * The SCYTHE_LAPACK flag enables LAPACK/BLAS support.  You must have
  * the LAPACK and BLAS libraries installed on your system and compile
- * your program with the appropriate linker flags for this to work.  For
- * example, on linux you can enable LAPACK/BLAS support like this:
+ * your program with the appropriate linker flags for this to work.
+ * For example, on linux you can enable LAPACK/BLAS support like this:
  *
  * \verbatim $ g++ myprog.cc -DSCYTHE_LAPACK -llapack -lblas -pthread \endverbatim
+ *
+ * The SCYTHE_PTHREAD flag makes the library thread-safe, using the
+ * POSIX Threads library.  Users should pass this flag to the compiler
+ * whenever they wish to run multi-threaded code that uses Scythe
+ * matrices.  Of course, this will only work on systems sporting the
+ * pthread libraries.  For example:
+ *
+ * \verbatim g++ myprog.cc -DSCYTHE_PTHREAD -pthread \endverbatim
+ *
+ * Please note that Scythe matrices are NOT thread-safe when the
+ * library is compiled without this flag.
+ *
+ * Finally, the SCYTHE_RPACK flag activates some code that makes
+ * Scythe play nicely with the R statistical programming environment.
+ * R packages that use Scythe should always use this compilation flag,
+ * and will generally include a line similar to
+ * \verbatim PKG_CPPFLAGS = -DSCYTHE_COMPILE_DIRECT -DSCYTHE_RPACK \endverbatim
+ * in the src/Makevars.in file within the package.
  * 
  * \section copy Copyright
  *
  * Scythe Statistical Library Copyright (C) 2000-2002 Andrew D. Martin
- * and Kevin M.  Quinn; 2002-present Andrew D. Martin, Kevin M. Quinn,
+ * and Kevin M.  Quinn; 2002-2012 Andrew D. Martin, Kevin M. Quinn,
  * and Daniel Pemstein.  All Rights Reserved.
  *
  * This program is free software; you can redistribute it and/or
  * modify under the terms of the GNU General Public License as
- * published by Free Software Foundation; either version 2 of the
+ * published by Free Software Foundation; either version 3 of the
  * License, or (at your option) any later version.  See the text files
  * COPYING and LICENSE, distributed with library's source code, for
  * further information.

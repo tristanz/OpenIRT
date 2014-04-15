@@ -34,35 +34,6 @@
  * implement these overloaded versions of the distribution functions
  * in terms of both generalized and default templates to allow for
  * explicit control over the template type of the returned Matrix.
- *
- * \note Doxygen does not correctly expand the macro definitions we use
- * to generate the Matrix versions of the various distribution
- * functions.  Therefore, it incorrectly substitutes the macro
- * variable
- * __VA_ARGS__ for the actual parameter values in the parameter lists
- * of each of these functions.  For example, the definitions of the
- * Matrix versions of pbeta are listed as
- * \code
- * template<matrix_order RO, matrix_style RS, matrix_order PO, matrix_style PS>
- * Matrix<double, RO, RS> scythe::pbeta (const Matrix<double, PO, PS> &X, __VA_ARGS__)
- *
- * template<matrix_order O, matrix_style S>
- * Matrix<double, O, Concrete> scythe::pbeta (const Matrix<double, O, S> &X, __VA_ARGS__)
- * \endcode
- * when they should be
- * \code
- * template<matrix_order RO, matrix_style RS, matrix_order PO, matrix_style PS>
- * Matrix<double, RO, RS> scythe::pbeta (const Matrix<double, PO, PS> &X, double a, double b)
- *
- * template<matrix_order O, matrix_style S>
- * Matrix<double, O, Concrete> scythe::pbeta (const Matrix<double, O, S> &X, double a, double b)
- * \endcode
- *
- * \par
- * Furthermore, Doxygen erroneously lists a number of variables at the
- * end of this document that are not, in fact, declared in
- * distributions.h.  Again, this error is a result of Doxygen's macro
- * parsing capabilities.
  * 
  */
 
@@ -88,8 +59,6 @@
 #include <climits>
 #include <algorithm>
 #include <limits>
-
-#include <boost/math/special_functions/log1p.hpp>
 
 #ifdef HAVE_IEEEFP_H
 #include <ieeefp.h>
@@ -441,7 +410,7 @@ namespace scythe {
     if(log_p) {              \
         *cum = (-xsq * xsq * 0.5) + (-del * 0.5) + std::log(temp);  \
         if((lower && x > 0.) || (upper && x <= 0.))      \
-        *ccum = boost::math::log1p(-std::exp(-xsq * xsq * 0.5) *     \
+        *ccum = ::log1p(-std::exp(-xsq * xsq * 0.5) *     \
           std::exp(-del * 0.5) * temp);    \
     }                \
     else {                \

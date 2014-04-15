@@ -46,8 +46,6 @@
 #include <numeric>
 #include <set>
 
-#include <boost/math/special_functions/log1p.hpp>
-
 namespace scythe {
 
   namespace {
@@ -67,9 +65,8 @@ namespace scythe {
   Matrix<T,RO,RS>                                                     \
   NAME (const Matrix<T,PO,PS>& A)                                     \
   {                                                                   \
-    double (*op)(double) = &OP;                                       \
     Matrix<T,RO,RS> res(A.rows(), A.cols(), false);                   \
-    std::transform(A.begin_f(), A.end_f(), res.begin_f(), op);        \
+    std::transform(A.begin_f(), A.end_f(), res.begin_f(), OP);        \
     return res;                                                       \
   }                                                                   \
                                                                       \
@@ -701,7 +698,7 @@ namespace scythe {
 	* \see logb()
 	*/
   
-   SCYTHE_MATH_OP(log1p, boost::math::log1p)
+  SCYTHE_MATH_OP(log1p, ::log1p)
   
   /* calc the logb of each element of a Matrix */
   /*!

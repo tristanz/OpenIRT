@@ -46,6 +46,10 @@
 #include "scythestat/error.h"
 #endif
 
+#ifdef SCYTHE_PTHREAD
+#include <pthread.h>
+#endif
+
 namespace scythe {
 	/* Convenience typedefs */
   namespace { // local to this file
@@ -211,6 +215,30 @@ namespace scythe {
 			uint refs_;  // The number of views looking at this block
 	}; // end class DataBlock
 
+	/*! \brief Null data block object.
+   *
+   * A nice little way to represent empty data blocks.
+   */
+	template <class T_type>
+	class NullDataBlock : public DataBlock<T_type>
+	{
+		typedef DataBlock<T_type> T_base;
+		public:
+			
+			NullDataBlock ()
+				: DataBlock<T_type> ()
+			{
+        // never want to deallocate (or resize) this one
+				T_base::addReference(); 
+				SCYTHE_DEBUG_MSG("Constructed NULL datablock");
+			}
+
+			~NullDataBlock ()
+			{}
+
+	}; // end class NullDataBlock
+
+
   /*! 
    * \brief Handle to DataBlock objects.
    *
@@ -223,12 +251,19 @@ namespace scythe {
 		public:
 			/**** CONSTRUCTORS ****/
 
-			/* Default constructor: sets up a null block
+			/* Default constructor: points the object at a static null block
 			 */
 			DataBlockReference ()
 				:	data_ (0),
-					block_ (NULL)
+					block_ (&nullBlock_)
 			{
+#ifdef SCYTHE_PTHREAD
+        pthread_mutex_lock (&ndbMutex_);
+#endif
+				block_->addReference();
+#ifdef SCYTHE_PTHREAD
+        pthread_mutex_unlock (&ndbMutex_);
+#endif
 			}
 
 			/* New block constructor: creates a new underlying block of a
@@ -238,7 +273,12 @@ namespace scythe {
 				:	data_ (0),
 					block_ (0)
 			{
-        newBlock(size);
+				block_ = new (std::nothrow) DataBlock<T_type> (size);
+				SCYTHE_CHECK_10 (block_ == 0, scythe_alloc_error,
+						"Could not allocate DataBlock object");
+				
+				data_ = block_->data();
+				block_->addReference();
 			}
 
 			/* Refrence to an existing block constructor: points to an
@@ -248,9 +288,18 @@ namespace scythe {
 				:	data_ (reference.data_ + offset),
 					block_ (reference.block_)
 			{
-        SCYTHE_CHECK_10(block_ == NULL, scythe_null_error,
-            "Attempted to view a null matrix")
+#ifdef SCYTHE_PTHREAD
+        bool lock = false;
+        if (block_ == &nullBlock_) {
+          pthread_mutex_lock (&ndbMutex_);
+          lock = true;
+        }
+#endif
 				block_->addReference();
+#ifdef SCYTHE_PTHREAD
+        if (lock)
+          pthread_mutex_unlock (&ndbMutex_);
+#endif
 			}
 			
 			/**** DESTRUCTOR ****/
@@ -259,7 +308,18 @@ namespace scythe {
 			 */
 			virtual ~DataBlockReference ()
 			{
+#ifdef SCYTHE_PTHREAD
+        bool lock = false;
+        if (block_ == &nullBlock_) {
+          pthread_mutex_lock (&ndbMutex_);
+          lock = true;
+        }
+#endif
 				withdrawReference();
+#ifdef SCYTHE_PTHREAD
+        if (lock)
+          pthread_mutex_unlock (&ndbMutex_);
+#endif
 			}
 
 		protected:
@@ -268,50 +328,83 @@ namespace scythe {
 			void referenceOther (const DataBlockReference<T_type>& ref,
 					uint offset = 0)
 			{
-        SCYTHE_CHECK_10(block_ == NULL, scythe_null_error,
-            "Attempted to view a null matrix")
+#ifdef SCYTHE_PTHREAD
+        bool lock = false;
+        if (block_ == &nullBlock_ || ref.block_ == &nullBlock_) {
+          pthread_mutex_lock (&ndbMutex_);
+          lock = true;
+        }
+#endif
 				withdrawReference ();
 				block_ = ref.block_;
 				block_->addReference();
 				data_ = ref.data_ + offset;
+#ifdef SCYTHE_PTHREAD
+        if (lock)
+          pthread_mutex_lock (&ndbMutex_);
+#endif
 			}
 
 			void referenceNew (uint size)
 			{
-				/* If we are the only referent to this data block, resize it.
+#ifdef SCYTHE_PTHREAD
+        bool lock = false;
+        if (block_ == &nullBlock_) {
+          pthread_mutex_lock (&ndbMutex_);
+          lock = true;
+        }
+#endif
+				/* If we are the only referent to this data block, resize it. 
 				 * Otherwise, shift the reference to point to a newly
 				 * constructed block.
 				 */
-        if (block_ == NULL) {
-          newBlock(size);
-        } else if (block_->references() == 1) {
+				if (block_->references() == 1) {
 					block_->resize(size);
           data_ = block_->data(); // This is a pretty good indication
           // that the interface and implementation are too tightly
           // coupled for resizing.
 				} else {
 					withdrawReference();
-          newBlock(size);
-        }
+					block_ = 0;
+					block_ = new (std::nothrow) DataBlock<T_type> (size);
+					SCYTHE_CHECK_10(block_ == 0, scythe_alloc_error,
+							"Could not allocate new data block");
+					data_ = block_->data();
+					block_->addReference();
+				}
+#ifdef SCYTHE_PTHREAD
+        if (lock)
+          pthread_mutex_unlock (&ndbMutex_);
+#endif
 			}
 
 		private:
 			/**** INTERNAL MEMBERS ****/
 			void withdrawReference ()
 			{
-				if (block_ != NULL && block_->removeReference() == 0)
+        // All calls to withdrawReference are mutex protected and protecting
+        // this too can create a race condition.
+
+				if (block_->removeReference() == 0
+						&& block_ != &nullBlock_)
 					delete block_;
 			}
 
-      void newBlock (uint size)
-      {
-        block_ = 0;
-        block_ = new (std::nothrow) DataBlock<T_type> (size);
-        SCYTHE_CHECK_10(block_ == 0, scythe_alloc_error,
-            "Could not allocate new data block");
-        data_ = block_->data();
-        block_->addReference();
-      }
+			void referenceNull ()
+			{
+#ifdef SCYTHE_PTHREAD
+        pthread_mutex_lock (&ndbMutex_);
+#endif
+				withdrawReference();
+				block_ = &nullBlock_;
+				block_->addReference();
+				data_ = 0;
+
+#ifdef SCYTHE_PTHREAD
+        pthread_mutex_unlock (&ndbMutex_);
+#endif
+			}
+
 
 		/**** INSTANCE VARIABLES ****/
 		protected:
@@ -319,8 +412,23 @@ namespace scythe {
 		
 		private:
 			DataBlock<T_type>* block_;
+			static NullDataBlock<T_type> nullBlock_;
+#ifdef SCYTHE_PTHREAD
+      static pthread_mutex_t ndbMutex_;
+#endif
 
 	}; // end class DataBlockReference
+
+	/* Instantiation of the static null memory block */
+	template <typename T>
+	NullDataBlock<T> DataBlockReference<T>::nullBlock_;
+
+#ifdef SCYTHE_PTHREAD
+  // mutex initialization
+  template <typename T>
+  pthread_mutex_t 
+  DataBlockReference<T>::ndbMutex_ = PTHREAD_MUTEX_INITIALIZER;
+#endif
 
 } // end namespace scythe
 
