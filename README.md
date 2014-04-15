@@ -1,14 +1,6 @@
-OpenIRT v. 1.0 - Bayesian and Maximum Likelihood Estimation of IRT Models.
+## OpenIRT v. 1.0 - Bayesian and Maximum Likelihood Estimation of IRT Models.
 
-AUTHOR:
-
-Tristan Zajonc
-John F. Kennedy School of Government
-Harvard University, Cambridge, MA 02138.
-Email: tzajonc@fas.harvard.edu
-Web: http://people.fas.harvard.edu/~tzajonc
-
-DESCRIPTION:
+### Description
 
 OpenIRT estimates 2PL and 3PL Item Response Theory (IRT) models for
 dichotomous data. It includes Bayesian MCMC estimation of item parameters
@@ -22,8 +14,15 @@ items can be used to place children and items on a known scale; missing
 responses can be used to link multiple overlapping test forms; and known
 abilities can be used to calibrate new items and ability parameters.
 
-INSTALLATION:
+### Installation
 
 In Stata:
+
+```stata
 . net install http://people.fas.harvard.edu/~tzajonc/stata/openirt
 . help openirt
+``
+
+### LICENSE
+
+MIT
