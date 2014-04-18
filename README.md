@@ -17,7 +17,7 @@ abilities can be used to calibrate new items and ability parameters.
 In Stata:
 
 ```stata
-. net install http://people.fas.harvard.edu/~tzajonc/stata/openirt
+. net install http://tristanz.github.com/OpenIRT
 . help openirt
 ```
 
@@ -30,10 +30,7 @@ brew install boost
 $ ./make.sh
 ```
 
-On Windows:
-
-```
-```
+On Windows: Use Visual Studio Solution.
 
 ### LICENSE
 
