@@ -21,17 +21,6 @@ In Stata:
 . help openirt
 ```
 
-## Building / Development
-
-This Stata library relies on compiled code.  To build on OSX:
-
-```
-$ brew install boost
-$ ./make.sh
-```
-
-On Windows: Use Visual Studio Solution in `windows/`.
-
 ## Alternatives
 
 * [2PL models using Stata's gsem command][1]
