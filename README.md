@@ -32,6 +32,16 @@ $ ./make.sh
 
 On Windows: Use Visual Studio Solution.
 
+### Alternatives
+
+* [2PL models using Stata's gsem command][1]
+* [IRT models using Stata's gllamm command][2]
+* [IRT models using R's ltm package][3]
+
 ### LICENSE
 
 MIT
+
+[1]: http://www.stata.com/manuals13/semexample29g.pdf#semexample29g
+[2]: http://www.gllamm.org/faqs/models/irtfitb.html
+[3]: http://cran.r-project.org/web/packages/ltm/index.html
