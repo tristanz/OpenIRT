@@ -1,4 +1,4 @@
-v 1.1
+v 1.2
 d Stata programs by Tristan Zajonc
 
 d Here are some potentially useful things I have written:
