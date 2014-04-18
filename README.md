@@ -1,4 +1,4 @@
-## OpenIRT - IRT Models in Stata
+# OpenIRT - IRT Models in Stata
 
 OpenIRT estimates 2PL and 3PL Item Response Theory (IRT) models for
 dichotomous data. It includes Bayesian MCMC estimation of item parameters
@@ -12,7 +12,7 @@ items can be used to place children and items on a known scale; missing
 responses can be used to link multiple overlapping test forms; and known
 abilities can be used to calibrate new items and ability parameters.
 
-### Installation / Usage
+## Installation / Usage
 
 In Stata:
 
@@ -21,24 +21,24 @@ In Stata:
 . help openirt
 ```
 
-### Building / Development
+## Building / Development
 
 This Stata library relies on compiled code.  To build on OSX:
 
 ```
-brew install boost
+$ brew install boost
 $ ./make.sh
 ```
 
-On Windows: Use Visual Studio Solution.
+On Windows: Use Visual Studio Solution in `windows/`.
 
-### Alternatives
+## Alternatives
 
 * [2PL models using Stata's gsem command][1]
 * [IRT models using Stata's gllamm command][2]
 * [IRT models using R's ltm package][3]
 
-### LICENSE
+## LICENSE
 
 MIT
 
