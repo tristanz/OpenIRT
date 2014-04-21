@@ -17,7 +17,7 @@ abilities can be used to calibrate new items and ability parameters.
 In Stata:
 
 ```stata
-. net install http://tristanz.github.com/OpenIRT/openirt.pkg
+. net install http://tristanz.github.io/OpenIRT/openirt.pkg
 . help openirt
 ```
 
